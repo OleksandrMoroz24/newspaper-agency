@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Dish list
+{#    <a href="{% url 'taxi:car-create' %}" class="btn btn-primary link-to-page">#}
+{#      Create#}
+{#    </a>#}
+  </h1>
+  {% if dish_list %}
+    <ul>
+      {% for dish in dish_list %}
+        <li>
+          <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" width="150px" height="150px">
+          <br>
+          <a href="{% url "restaurant:dish-detail" pk=dish.id %} ">{{ dish.name }}</a>
+          ({{ dish.dish_type }})
+          {{ dish.price }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no dish in menu</p>
+  {% endif %}
+{% endblock %}
