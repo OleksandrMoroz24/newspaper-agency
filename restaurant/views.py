@@ -1,14 +1,15 @@
+
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
 from django.urls import reverse_lazy
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from restaurant.models import Dish, DishType, Cook
+from restaurant.forms import CookForm, DishForm, SearchForm
 
 
-#@login_required
+@login_required
 def index(request):
     """View function for the home page of the site."""
 
@@ -29,11 +30,73 @@ def index(request):
     return render(request, "restaurant/index.html", context=context)
 
 
-class DishListView(generic.ListView):
-    model = Dish
-    paginate_by = 5
-    queryset = Dish.objects.all().select_related("dish_type")
+class CookCreateView(CreateView, LoginRequiredMixin):
+    model = Cook
+    form_class = CookForm
+    template_name = 'restaurant/cook_form.html'
 
 
-class DishDetailView(generic.DetailView):
+class CookUpdateView(UpdateView, LoginRequiredMixin):
+    model = Cook
+    form_class = CookForm
+    template_name = 'restaurant/cook_form.html'
+
+
+class CookDeleteView(DeleteView, LoginRequiredMixin):
+    model = Cook
+    success_url = reverse_lazy('cook_list')
+    template_name = 'restaurant/cook_confirm_delete.html'
+
+
+class CookDetailView(DetailView, LoginRequiredMixin):
+    model = Cook
+    template_name = 'restaurant/cook_detail.html'
+
+
+class DishCreateView(CreateView, LoginRequiredMixin):
     model = Dish
+    form_class = DishForm
+    template_name = 'restaurant/dish_form.html'
+
+
+class DishUpdateView(UpdateView, LoginRequiredMixin):
+    model = Dish
+    form_class = DishForm
+    template_name = 'restaurant/dish_form.html'
+
+
+class DishDeleteView(DeleteView, LoginRequiredMixin):
+    model = Dish
+    success_url = reverse_lazy('dish_list')
+    template_name = 'restaurant/dish_confirm_delete.html'
+
+
+class DishDetailView(DetailView, LoginRequiredMixin):
+    model = Dish
+    template_name = 'restaurant/dish_detail.html'
+
+
+class CookListView(ListView, LoginRequiredMixin):
+    model = Cook
+    template_name = 'restaurant/cook_list.html'
+    form_class = SearchForm
+
+    def get_queryset(self):
+        form = self.form_class(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            return Cook.objects.filter(username__icontains=query)
+        return Cook.objects.all()
+
+
+class DishListView(ListView, LoginRequiredMixin):
+    model = Dish
+    template_name = 'restaurant/dish_list.html'
+    form_class = SearchForm
+
+    def get_queryset(self):
+        form = self.form_class(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            return Dish.objects.filter(name__icontains=query)
+        return Dish.objects.all()
