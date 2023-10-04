@@ -10,7 +10,11 @@ from .views import (
     DishUpdateView,
     DishDeleteView,
     DishDetailView,
-    DishListView
+    DishListView,
+    DishTypeListView,
+    DishTypeCreateView,
+    DishTypeUpdateView,
+    DishTypeDeleteView
 )
 
 urlpatterns = [
@@ -26,6 +30,11 @@ urlpatterns = [
     path('dish/<int:pk>/delete/', DishDeleteView.as_view(), name='dish-delete'),
     path('dish/<int:pk>/', DishDetailView.as_view(), name='dish-detail'),
     path('dish/', DishListView.as_view(template_name='restaurant/dish_list.html'), name='dish-list'),
+
+    path('dish_types/', DishTypeListView.as_view(), name='dish_type_list'),
+    path('dish_types/create/', DishTypeCreateView.as_view(), name='dish_type_add'),
+    path('dish_types/update/<int:pk>/', DishTypeUpdateView.as_view(), name='dish_type_edit'),
+    path('dish_types/delete/<int:pk>/', DishTypeDeleteView.as_view(), name='dish_type_delete'),
 ]
 
 app_name = "restaurant"

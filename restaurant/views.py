@@ -1,12 +1,19 @@
-
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from restaurant.models import Dish, DishType, Cook
-from restaurant.forms import CookForm, DishForm, SearchForm, CookCreationForm, CookUpdateForm
+from restaurant.forms import (
+    DishForm,
+    DishTypeForm,
+    CookCreationForm,
+    CookUpdateForm,
+    DishSearchForm,
+    CookSearchForm
+)
 
 
 @login_required
@@ -83,24 +90,63 @@ class DishDetailView(DetailView, LoginRequiredMixin):
 class CookListView(ListView, LoginRequiredMixin):
     model = Cook
     template_name = 'restaurant/cook_list.html'
-    form_class = SearchForm
+    form_class = CookSearchForm
+    paginate_by = 5
 
     def get_queryset(self):
-        form = self.form_class(self.request.GET)
-        if form.is_valid():
-            query = form.cleaned_data['query']
+        query = self.request.GET.get("query")
+        if query:
             return Cook.objects.filter(username__icontains=query)
-        return Cook.objects.all()
+        else:
+            return Cook.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = self.form_class(self.request.GET)
+        return context
 
 
 class DishListView(ListView, LoginRequiredMixin):
     model = Dish
     template_name = 'restaurant/dish_list.html'
-    form_class = SearchForm
+    form_class = DishSearchForm
+    paginate_by = 5
 
     def get_queryset(self):
-        form = self.form_class(self.request.GET)
-        if form.is_valid():
-            query = form.cleaned_data['query']
-            return Dish.objects.filter(name__icontains=query)
-        return Dish.objects.all()
+        query = self.request.GET.get("query")
+        if query:
+            return Dish.objects.filter(dish_type__name__icontains=query
+                                       ).select_related("dish_type")
+        else:
+            return Dish.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = self.form_class(self.request.GET)
+        return context
+
+
+class DishTypeListView(ListView):
+    model = DishType
+    template_name = 'restaurant/dish_type_list.html'
+    paginate_by = 10
+
+
+class DishTypeCreateView(CreateView):
+    model = DishType
+    form_class = DishTypeForm
+    template_name = 'restaurant/dish_type_form.html'
+    success_url = reverse_lazy("restaurant:dish_type_list")
+
+
+class DishTypeUpdateView(UpdateView):
+    model = DishType
+    form_class = DishTypeForm
+    template_name = 'restaurant/dish_type_form.html'
+    success_url = reverse_lazy("restaurant:dish_type_list")
+
+
+class DishTypeDeleteView(DeleteView):
+    model = DishType
+    template_name = 'restaurant/dish_type_confirm_delete.html'
+    success_url = reverse_lazy("restaurant:dish_type_list")

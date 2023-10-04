@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <h1>
@@ -7,12 +8,19 @@
       Create
     </a>
   </h1>
+  <form method="get" action="">
+      {{ search_form|crispy }}
+      <input class="btn btn-secondary" type="submit" value="search">
+  </form>
+  <br>
   {% if cook_list %}
     <ul>
       {% for cook in cook_list %}
         {% if not cook.is_superuser %}
           <li>
             <img src="{{ cook.photo.url }}" alt="{{ cook.username }}" width="150px" height="150px">
+            <br>
+            {{ cook.username }}
             <br>
             <a href="{% url "restaurant:cook-detail" pk=cook.id %} ">{{ cook.first_name }} {{ cook.last_name }}</a>
           </li>

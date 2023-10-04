@@ -17,8 +17,14 @@
   </h1>
   <br>
   <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" width="300px" height="300px">
-  <h3><strong>Dish type:</strong> {{ dish.dish_type.name }}</h3>
-  <h5><strong>Price:</strong> {{ dish.price }}</h5>
-  <h5><strong>Description:</strong> {{ dish.description }}</h5>
+  <p><strong>Dish type:</strong> {{ dish.dish_type.name }}</p>
+  <p><strong>Price:</strong> {{ dish.price }}</p>
+  <p><strong>Description:</strong> {{ dish.description }}</p>
   <br>
+  <p><strong>Cooks:</strong></p>
+  {% for cook in dish.cooks.all %}
+    <ul>
+      <li>{{ cook.first_name }} {{ cook.last_name }}</li>
+    </ul>
+  {% endfor %}
 {% endblock %}
