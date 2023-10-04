@@ -1,21 +1,24 @@
+{% extends "base.html" %}
+
 {% block content %}
-  <h1 class="text-white text-center">
+  <h1 class=" text-left">
     {{ dish.name }}
-    {% if user.is_superuser %}
+{#    {% if user.is_superuser %}#}
       <a href="{% url 'restaurant:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page float-right">
         Delete
       </a>
-    {% endif %}
-    {% if user.is_staff %}
+{#    {% endif %}#}
+{#    {% if user.is_staff %}#}
       <a href="{% url 'restaurant:dish-edit' pk=dish.id %}" class="btn btn-secondary link-to-page float-right">
 
         Update
       </a>
-    {% endif %}
+{#    {% endif %}#}
   </h1>
   <br>
-  <h3 class="text-white"><strong>Dish type:</strong> {{ dish.dish_type.name }}</h3>
-  <h5 class="text-white ml-4"><strong>Price:</strong> {{ dish.price }}</h5>
-  <h5 class="text-white ml-4"><strong>Description:</strong> {{ dish.description }}</h5>
+  <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" width="300px" height="300px">
+  <h3><strong>Dish type:</strong> {{ dish.dish_type.name }}</h3>
+  <h5><strong>Price:</strong> {{ dish.price }}</h5>
+  <h5><strong>Description:</strong> {{ dish.description }}</h5>
   <br>
 {% endblock %}

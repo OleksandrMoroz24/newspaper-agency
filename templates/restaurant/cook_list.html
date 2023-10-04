@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Cooks list
+    <a href="{% url 'restaurant:cook-add' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+  {% if cook_list %}
+    <ul>
+      {% for cook in cook_list %}
+        {% if not cook.is_superuser %}
+          <li>
+            <img src="{{ cook.photo.url }}" alt="{{ cook.username }}" width="150px" height="150px">
+            <br>
+            <a href="{% url "restaurant:cook-detail" pk=cook.id %} ">{{ cook.first_name }} {{ cook.last_name }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no dish in menu</p>
+  {% endif %}
+{% endblock %}
