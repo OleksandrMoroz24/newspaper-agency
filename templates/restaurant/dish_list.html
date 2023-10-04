@@ -2,30 +2,46 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Dish list
-    <a href="{% url 'restaurant:dish-add' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
-  <form method="get" action="">
-      {{ search_form|crispy }}
-      <input class="btn btn-secondary" type="submit" value="search">
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dish List</h1>
+        <a href="{% url 'restaurant:dish-add' %}" class="btn btn-primary">Create</a>
+    </div>
+
+    <form method="get" action="" class="mb-3">
+        <div class="input-group">
+            {{ search_form|crispy }}
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit" style="width: 75px; height: 40px; margin-left: 10px; ">
+                    Search
+                </button>
+            </div>
+        </div>
     </form>
-  <br>
-  {% if dish_list %}
-    <ul>
-      {% for dish in dish_list %}
-        <li>
-          <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" width="150px" height="150px">
-          <br>
-          <a href="{% url "restaurant:dish-detail" pk=dish.id %} ">{{ dish.name }}</a>
-          ({{ dish.dish_type }})
-          {{ dish.price }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>There are no dish in menu</p>
-  {% endif %}
+
+    {% if dish_list %}
+    <div class="row">
+        {% for dish in dish_list %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div style="overflow: hidden; height: 250px;">
+                    <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" class="img-fluid" style="width: 100%; height: 125%;">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url "restaurant:dish-detail" pk=dish.id %}">{{ dish.name }}</a>
+                        ({{ dish.dish_type }})
+                    </h5>
+                    <p class="card-text">{{ dish.price }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        There are no dishes in the menu.
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,18 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Kittens Restaurant Home Page</h1>
-    <p>Welcome to Kittens Restaurant!</p>
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to Kittens Restaurant!</h1>
+        <p class="lead">The perfect place for every cat-loving food enthusiast.</p>
+    </div>
 
-    <p>The Kittens Restaurant has the following record counts:</p>
-    <ul>
-        <li><strong>Cooks:</strong> {{ num_cooks }}</li>
-        <li><strong>Dishes:</strong> {{ num_dishes }}</li>
-        <li><strong>Dish Type:</strong> {{ num_dish_types }}</li>
-    </ul>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card bg-light mb-3">
+                <div class="card-header">Cooks</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ num_cooks }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light mb-3">
+                <div class="card-header">Dishes</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ num_dishes }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light mb-3">
+                <div class="card-header">Dish Types</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ num_dish_types }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p>You have visited this page
-        {{ num_visits }} time{{ num_visits|pluralize }}.
-    </p>
+    <div class="text-center">
+        <p>You have visited this page
+            {{ num_visits }} time{{ num_visits|pluralize }}.
+        </p>
+    </div>
 
 {% endblock %}

@@ -1,43 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Dish Types List
-    <a href="{% url 'restaurant:dish_type_add' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dish Types List</h1>
+        <a href="{% url 'restaurant:dish_type_add' %}" class="btn btn-primary">Create</a>
+    </div>
 
-  <br>
-  {% if dishtype_list %}
-    <table class="table">
-      <tr>
-        <th>Name</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-
-      {% for dishtype in dishtype_list %}
-        <tr>
-          <td>
-              {{ dishtype.name }}
-          </td>
-          <td>
-              <a href="{% url 'restaurant:dish_type_edit' pk=dishtype.id %}">
-                Update
-              </a>
-            </td>
-            <td>
-              <a style="color: red"
-                href="{% url 'restaurant:dish_type_delete' pk=dishtype.id %}">
-                Delete
-              </a>
-            </td>
-        </tr>
-      {% endfor %}
+    {% if dishtype_list %}
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dishtype in dishtype_list %}
+            <tr>
+                <td>{{ dishtype.name }}</td>
+                <td>
+                    <a href="{% url 'restaurant:dish_type_edit' pk=dishtype.id %}" class="btn btn-secondary btn-sm">Update</a>
+                </td>
+                <td>
+                    <a href="{% url 'restaurant:dish_type_delete' pk=dishtype.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-
-  {% else %}
-      <p>There are no dish types in the menu.</p>
-  {% endif %}
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        There are no dish types in the menu.
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

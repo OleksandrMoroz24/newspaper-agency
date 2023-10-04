@@ -91,7 +91,7 @@ class CookListView(ListView, LoginRequiredMixin):
     model = Cook
     template_name = 'restaurant/cook_list.html'
     form_class = CookSearchForm
-    paginate_by = 5
+    paginate_by = 7
 
     def get_queryset(self):
         query = self.request.GET.get("query")
@@ -110,7 +110,7 @@ class DishListView(ListView, LoginRequiredMixin):
     model = Dish
     template_name = 'restaurant/dish_list.html'
     form_class = DishSearchForm
-    paginate_by = 5
+    paginate_by = 6
 
     def get_queryset(self):
         query = self.request.GET.get("query")

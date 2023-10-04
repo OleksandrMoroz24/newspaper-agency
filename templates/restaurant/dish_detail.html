@@ -1,30 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1 class=" text-left">
-    {{ dish.name }}
-{#    {% if user.is_superuser %}#}
-      <a href="{% url 'restaurant:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page float-right">
-        Delete
-      </a>
-{#    {% endif %}#}
-{#    {% if user.is_staff %}#}
-      <a href="{% url 'restaurant:dish-edit' pk=dish.id %}" class="btn btn-secondary link-to-page float-right">
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>{{ dish.name }}</h1>
+        <div>
+            <a href="{% url 'restaurant:dish-edit' pk=dish.id %}" class="btn btn-secondary mr-2">Update</a>
+            <a href="{% url 'restaurant:dish-delete' pk=dish.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
 
-        Update
-      </a>
-{#    {% endif %}#}
-  </h1>
-  <br>
-  <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" width="300px" height="300px">
-  <p><strong>Dish type:</strong> {{ dish.dish_type.name }}</p>
-  <p><strong>Price:</strong> {{ dish.price }}</p>
-  <p><strong>Description:</strong> {{ dish.description }}</p>
-  <br>
-  <p><strong>Cooks:</strong></p>
-  {% for cook in dish.cooks.all %}
-    <ul>
-      <li>{{ cook.first_name }} {{ cook.last_name }}</li>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <img src="{{ dish.photo.url }}" alt="{{ dish.name }}" class="img-fluid rounded">
+        </div>
+        <div class="col-md-8">
+            <p><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>
+            <p><strong>Price:</strong> {{ dish.price }}</p>
+            <p><strong>Description:</strong> {{ dish.description }}</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3>Cooks</h3>
+    <ul class="list-group mb-4">
+        {% for cook in dish.cooks.all %}
+        <li class="list-inline-item">{{ cook.first_name }} {{ cook.last_name }}</li>
+        {% endfor %}
     </ul>
-  {% endfor %}
+</div>
 {% endblock %}
