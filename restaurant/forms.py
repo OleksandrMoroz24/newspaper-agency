@@ -5,7 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Cook, Dish, DishType
 
 
+# Form for creating and updating Dish instances
 class DishForm(forms.ModelForm):
+    # Allowing selection of multiple cooks for a dish using checkboxes
     cooks = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
@@ -22,6 +24,7 @@ class DishTypeForm(forms.ModelForm):
         fields = ['name']
 
 
+# Form for creating Cook instances, extending UserCreationForm to include authentication fields
 class CookCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Cook
@@ -36,6 +39,7 @@ class CookUpdateForm(forms.ModelForm):
         fields = ['photo', 'years_of_experience']
 
 
+# Form for searching dishes by type
 class DishSearchForm(forms.Form):
     query = forms.CharField(
         max_length=255,
@@ -49,6 +53,7 @@ class DishSearchForm(forms.Form):
     )
 
 
+# Form for searching cooks by username
 class CookSearchForm(forms.Form):
     query = forms.CharField(
         max_length=255,

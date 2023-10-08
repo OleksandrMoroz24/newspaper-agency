@@ -19,11 +19,13 @@ from restaurant.forms import (
 @login_required
 def index(request):
     """View function for the home page of the site."""
+    # Counting the number of Cooks, Dishes, and DishTypes in the database.
 
     num_cooks = Cook.objects.count()
     num_dishes = Dish.objects.count()
     num_dish_types = DishType.objects.count()
 
+    # Counting the number of visits using session variable.
     num_visits = request.session.get("num_visits", 0)
     request.session["num_visits"] = num_visits + 1
 
@@ -37,6 +39,7 @@ def index(request):
     return render(request, "restaurant/index.html", context=context)
 
 
+# The following class-based views are CRUD operations for the Cook model
 class CookCreateView(CreateView, LoginRequiredMixin):
     model = Cook
     form_class = CookCreationForm
@@ -93,6 +96,7 @@ class CookListView(ListView, LoginRequiredMixin):
     form_class = CookSearchForm
     paginate_by = 7
 
+    # Query for search field
     def get_queryset(self):
         query = self.request.GET.get("query")
         if query:
@@ -112,6 +116,7 @@ class DishListView(ListView, LoginRequiredMixin):
     form_class = DishSearchForm
     paginate_by = 6
 
+    # Query for search field
     def get_queryset(self):
         query = self.request.GET.get("query")
         if query:
