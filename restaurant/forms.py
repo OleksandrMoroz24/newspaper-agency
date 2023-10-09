@@ -15,13 +15,20 @@ class DishForm(forms.ModelForm):
 
     class Meta:
         model = Dish
-        fields = ['name', 'description', 'price', 'dish_type', 'cooks', 'photo']
+        fields = [
+            "name",
+            "description",
+            "price",
+            "dish_type",
+            "cooks",
+            "photo"
+        ]
 
 
 class DishTypeForm(forms.ModelForm):
     class Meta:
         model = DishType
-        fields = ['name']
+        fields = ["name"]
 
 
 # Form for creating Cook instances, extending UserCreationForm to include authentication fields
@@ -29,14 +36,14 @@ class CookCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Cook
         fields = UserCreationForm.Meta.fields + (
-            "first_name", "last_name", 'photo', 'years_of_experience'
+            "first_name", "last_name", "photo", "years_of_experience"
         )
 
 
 class CookUpdateForm(forms.ModelForm):
     class Meta:
         model = Cook
-        fields = ['photo', 'years_of_experience']
+        fields = ["photo", "years_of_experience"]
 
 
 # Form for searching dishes by type
