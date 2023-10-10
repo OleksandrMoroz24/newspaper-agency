@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='!q10*ode^95l^-t@#r+%-vh^4=sa^
 
 DEBUG = "RENDER" not in os.environ
 
-ALLOWED_HOSTS = ["127.0.0.1", "https://restaurant-kitchen-service-s8sj.onrender.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "restaurant-kitchen-service-s8sj.onrender.com"]
 
 
 # Application definition
