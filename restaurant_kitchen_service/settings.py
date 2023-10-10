@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='!q10*ode^95l^-t@#r+%-vh^4=sa^
 
 DEBUG = "RENDER" not in os.environ
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "https://restaurant-kitchen-service-s8sj.onrender.com"]
 
 
 # Application definition
@@ -41,8 +41,7 @@ ROOT_URLCONF = "restaurant_kitchen_service.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"]
-        ,
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
