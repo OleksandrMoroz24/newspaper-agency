@@ -5,7 +5,7 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = os.environ.get('SECRET_KEY', default='!q10*ode^95l^-t@#r+%-vh^4=sa^om+l)5nk4qqc4pcg!4l+y')
 
 DEBUG = "RENDER" not in os.environ
 
